@@ -10,8 +10,8 @@ using pet_hotel.Models;
 namespace dotnet_bakery.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211028154800_alterPetOwnersTable1")]
-    partial class alterPetOwnersTable1
+    [Migration("20211028170723_freshStart")]
+    partial class freshStart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,14 +31,14 @@ namespace dotnet_bakery.Migrations
                     b.Property<int?>("PetOwners")
                         .HasColumnType("integer");
 
-                    b.Property<string>("breed")
-                        .HasColumnType("text");
+                    b.Property<int>("breed")
+                        .HasColumnType("integer");
 
-                    b.Property<DateTime>("checkedInAt")
+                    b.Property<DateTime?>("checkedInAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("color")
-                        .HasColumnType("text");
+                    b.Property<int>("color")
+                        .HasColumnType("integer");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -72,11 +72,11 @@ namespace dotnet_bakery.Migrations
 
             modelBuilder.Entity("pet_hotel.Models.Pet", b =>
                 {
-                    b.HasOne("pet_hotel.Models.PetOwner", "ownerId")
+                    b.HasOne("pet_hotel.Models.PetOwner", "petOwner")
                         .WithMany()
                         .HasForeignKey("PetOwners");
 
-                    b.Navigation("ownerId");
+                    b.Navigation("petOwner");
                 });
 #pragma warning restore 612, 618
         }

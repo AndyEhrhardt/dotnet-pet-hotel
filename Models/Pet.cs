@@ -30,11 +30,26 @@ namespace pet_hotel.Models
 
         [Required]
         public string name { get; set; }
-        public string color { get; set; }
-        public DateTime?  checkedInAt { get; set;}
-        public string breed { get; set; }
+        
+        
+        public DateTime? checkedInAt { get; set; }
 
-        [ForeignKey("PetOwners")]
-        public PetOwner petOwnerid {get; set;}
+        
+
+
+        [ForeignKey("petOwners")]
+        public int petOwnerid {get; set;}
+
+        public PetOwner petOwner { get; set; }
+
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public PetColorType color { get; set; }
+        
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public PetBreedType breed { get; set; }
     }
 }
+
+// alt:
+// public Nullable <DateTime> checkedInAt { get; set; }

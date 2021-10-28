@@ -26,25 +26,25 @@ namespace dotnet_bakery.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("PetOwners")
+                    b.Property<int>("breed")
                         .HasColumnType("integer");
 
-                    b.Property<string>("breed")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("checkedInAt")
+                    b.Property<DateTime?>("checkedInAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("color")
-                        .HasColumnType("text");
+                    b.Property<int>("color")
+                        .HasColumnType("integer");
 
                     b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("petOwnerid")
+                        .HasColumnType("integer");
+
                     b.HasKey("id");
 
-                    b.HasIndex("PetOwners");
+                    b.HasIndex("petOwnerid");
 
                     b.ToTable("Pets");
                 });
@@ -70,11 +70,13 @@ namespace dotnet_bakery.Migrations
 
             modelBuilder.Entity("pet_hotel.Models.Pet", b =>
                 {
-                    b.HasOne("pet_hotel.Models.PetOwner", "ownerId")
+                    b.HasOne("pet_hotel.Models.PetOwner", "petOwner")
                         .WithMany()
-                        .HasForeignKey("PetOwners");
+                        .HasForeignKey("petOwnerid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("ownerId");
+                    b.Navigation("petOwner");
                 });
 #pragma warning restore 612, 618
         }

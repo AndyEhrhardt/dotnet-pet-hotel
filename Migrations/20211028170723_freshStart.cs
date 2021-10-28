@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace dotnet_bakery.Migrations
 {
-    public partial class CreatePetTable : Migration
+    public partial class freshStart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace dotnet_bakery.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
-                    petCount = table.Column<int>(type: "integer", nullable: false)
+                    emailAddress = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,28 +29,35 @@ namespace dotnet_bakery.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
-                    color = table.Column<string>(type: "text", nullable: true),
-                    checkedInAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    petOwnerId = table.Column<string>(type: "text", nullable: true),
-                    breed = table.Column<string>(type: "text", nullable: true),
-                    ownerId = table.Column<int>(type: "integer", nullable: false),
-                    ownerName = table.Column<string>(type: "text", nullable: true),
-                    ownerEmail = table.Column<string>(type: "text", nullable: true),
-                    ownerPetCount = table.Column<int>(type: "integer", nullable: false)
+                    checkedInAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    PetOwners = table.Column<int>(type: "integer", nullable: true),
+                    color = table.Column<int>(type: "integer", nullable: false),
+                    breed = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pets", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Pets_PetOwners_PetOwners",
+                        column: x => x.PetOwners,
+                        principalTable: "PetOwners",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_PetOwners",
+                table: "Pets",
+                column: "PetOwners");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PetOwners");
+                name: "Pets");
 
             migrationBuilder.DropTable(
-                name: "Pets");
+                name: "PetOwners");
         }
     }
 }
