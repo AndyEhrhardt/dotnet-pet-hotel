@@ -52,6 +52,7 @@ namespace pet_hotel.Controllers
             _context.SaveChanges();
         }
 
+        //put
         [HttpPut("{id}")]
         public PetOwner Put(int id, PetOwner petowner){
             petowner.id = id;
