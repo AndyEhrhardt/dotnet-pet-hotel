@@ -12,9 +12,9 @@ namespace pet_hotel.Models
 
         [Required]
         public string name { get; set; }
-        public int petCount { get; set; }
-        [NotMapped] //?
         public string emailAddress { get; set; }
+        [NotMapped]
+        public int petCount { get; set; }
     }
 
 }
